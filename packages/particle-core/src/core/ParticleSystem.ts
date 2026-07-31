@@ -87,6 +87,8 @@ export class ParticleSystem {
 
         particle.radius = options.radius ?? 2;
 
+        particle.lifetime = options.lifetime ?? Infinity;
+
         return true;
     }
     public getActiveParticles() {

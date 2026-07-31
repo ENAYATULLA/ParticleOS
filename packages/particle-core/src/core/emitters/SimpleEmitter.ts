@@ -51,6 +51,7 @@ export class SimpleEmitter implements IEmitter {
             );
 
             particle.radius = 3;
+            particle.lifetime = 3;
         }
 
         // Emit only once

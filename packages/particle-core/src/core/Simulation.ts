@@ -84,6 +84,13 @@ export class Simulation {
                 particle.position.y = this.worldHeight;
                 particle.velocity.y *= -1;
             }
+
+            // Lifetime
+            particle.age += deltaTime;
+
+            if (!particle.isAlive()) {
+                this.particlePool.release(particle);
+            }
         }
     }
 
