@@ -5,7 +5,7 @@ import { Engine } from "./Engine";
 import { Simulation } from "./Simulation";
 import { Time } from "./Time";
 import type { SpawnOptions } from "../types";
-
+import type { IEmitter } from "../interfaces";
 
 export class ParticleSystem {
     private readonly engine: Engine;
@@ -94,4 +94,10 @@ export class ParticleSystem {
             .getParticlePool()
             .getActiveParticles();
     }
+    public addEmitter(emitter: IEmitter): void {
+        this.engine
+            .getSimulation()
+            .addEmitter(emitter);
+    }
+
 }
