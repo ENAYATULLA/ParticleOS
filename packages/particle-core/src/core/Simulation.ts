@@ -46,9 +46,19 @@ export class Simulation {
     public update(deltaTime: number): void {
         this.emitterManager.update(deltaTime);
 
-        // Particle update pipeline
-        // Force -> Behavior -> Integrator
-        // will be implemented incrementally.
+        const particles =
+            this.particlePool.getActiveParticles();
+
+        for (const particle of particles) {
+            particle.position.x +=
+                particle.velocity.x * deltaTime;
+
+            particle.position.y +=
+                particle.velocity.y * deltaTime;
+
+            particle.position.z +=
+                particle.velocity.z * deltaTime;
+        }
     }
 
     public getParticlePool(): ParticlePool {
