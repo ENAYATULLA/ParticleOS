@@ -4,6 +4,8 @@ import { EngineState, type ParticleSystemOptions } from "../types";
 import { Engine } from "./Engine";
 import { Simulation } from "./Simulation";
 import { Time } from "./Time";
+import type { SpawnOptions } from "../types";
+
 
 export class ParticleSystem {
     private readonly engine: Engine;
@@ -62,5 +64,29 @@ export class ParticleSystem {
 
     public getSimulation(): Simulation {
         return this.engine.getSimulation();
+    }
+    public spawn(options: SpawnOptions): boolean {
+        const particle =
+            this.engine.getParticlePool().create();
+
+        if (!particle) {
+            return false;
+        }
+
+        particle.position.set(
+            options.x,
+            options.y,
+            0
+        );
+
+        particle.velocity.set(
+            options.vx ?? 0,
+            options.vy ?? 0,
+            0
+        );
+
+        particle.radius = options.radius ?? 2;
+
+        return true;
     }
 }
