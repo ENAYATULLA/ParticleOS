@@ -99,5 +99,13 @@ export class ParticleSystem {
             .getSimulation()
             .addEmitter(emitter);
     }
+    public setWorldBounds(
+        width: number,
+        height: number
+    ): void {
+        this.engine
+            .getSimulation()
+            .setWorldBounds(width, height);
+    }
 
 }

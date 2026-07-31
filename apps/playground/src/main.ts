@@ -1,4 +1,8 @@
-import { Particle } from "@particleos/particle-core";
+import {
+  ParticleSystem,
+  SimpleEmitter,
+} from "@particleos/particle-core";
+
 import "./style.css";
 
 import { GameLoop } from "./engine/GameLoop";
@@ -12,46 +16,33 @@ if (!app) {
 
 const renderer = new CanvasRenderer(app);
 
-const particles: Particle[] = [];
+const system = new ParticleSystem({
+  maxParticles: 1000,
+  autoStart: true,
+});
 
-for (let i = 0; i < 100; i++) {
-  const particle = new Particle();
+system.setWorldBounds(
+  renderer.width,
+  renderer.height
+);
 
-  particle.position.x = Math.random() * renderer.width;
-  particle.position.y = Math.random() * renderer.height;
-
-  particle.velocity.x = (Math.random() - 0.5) * 120;
-  particle.velocity.y = (Math.random() - 0.5) * 120;
-
-  particle.radius = 2 + Math.random() * 3;
-  particle.active = true;
-
-  particles.push(particle);
-}
+system.addEmitter(
+  new SimpleEmitter(
+    renderer.width / 2,
+    renderer.height / 2,
+    100,
+    120
+  )
+);
 
 function update(deltaTime: number): void {
-  for (const particle of particles) {
-    particle.position.x += particle.velocity.x * deltaTime;
-    particle.position.y += particle.velocity.y * deltaTime;
-
-    if (
-      particle.position.x < 0 ||
-      particle.position.x > renderer.width
-    ) {
-      particle.velocity.x *= -1;
-    }
-
-    if (
-      particle.position.y < 0 ||
-      particle.position.y > renderer.height
-    ) {
-      particle.velocity.y *= -1;
-    }
-  }
+  system.update(deltaTime);
 }
 
 function render(): void {
   renderer.clear();
+
+  const particles = system.getActiveParticles();
 
   for (const particle of particles) {
     renderer.drawCircle(

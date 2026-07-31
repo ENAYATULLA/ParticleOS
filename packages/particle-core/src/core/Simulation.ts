@@ -13,6 +13,10 @@ import {
 } from "./managers";
 
 export class Simulation {
+    private worldWidth = Infinity;
+
+    private worldHeight = Infinity;
+
     private readonly particlePool: ParticlePool;
 
     private readonly emitterManager: EmitterManager;
@@ -50,6 +54,7 @@ export class Simulation {
             this.particlePool.getActiveParticles();
 
         for (const particle of particles) {
+            // Velocity Integration
             particle.position.x +=
                 particle.velocity.x * deltaTime;
 
@@ -58,7 +63,36 @@ export class Simulation {
 
             particle.position.z +=
                 particle.velocity.z * deltaTime;
+
+            // World Bounds Collision
+            if (particle.position.x < 0) {
+                particle.position.x = 0;
+                particle.velocity.x *= -1;
+            }
+
+            if (particle.position.x > this.worldWidth) {
+                particle.position.x = this.worldWidth;
+                particle.velocity.x *= -1;
+            }
+
+            if (particle.position.y < 0) {
+                particle.position.y = 0;
+                particle.velocity.y *= -1;
+            }
+
+            if (particle.position.y > this.worldHeight) {
+                particle.position.y = this.worldHeight;
+                particle.velocity.y *= -1;
+            }
         }
+    }
+
+    public setWorldBounds(
+        width: number,
+        height: number
+    ): void {
+        this.worldWidth = width;
+        this.worldHeight = height;
     }
 
     public getParticlePool(): ParticlePool {
