@@ -4,17 +4,25 @@ import { EngineState, type ParticleSystemOptions } from "../types";
 import { Engine } from "./Engine";
 import { Simulation } from "./Simulation";
 import { Time } from "./Time";
+
 import type { SpawnOptions } from "../types";
-import type { IEmitter } from "../interfaces";
+import type {
+    IEmitter,
+    IForce,
+} from "../interfaces";
 
 export class ParticleSystem {
     private readonly engine: Engine;
 
     public constructor(options: ParticleSystemOptions = {}) {
-        this.engine = new Engine(options.maxParticles ?? 1000);
+        this.engine = new Engine(
+            options.maxParticles ?? 1000
+        );
 
         if (options.timeScale !== undefined) {
-            this.engine.getTime().setTimeScale(options.timeScale);
+            this.engine
+                .getTime()
+                .setTimeScale(options.timeScale);
         }
 
         if (options.autoStart) {
@@ -65,6 +73,7 @@ export class ParticleSystem {
     public getSimulation(): Simulation {
         return this.engine.getSimulation();
     }
+
     public spawn(options: SpawnOptions): boolean {
         const particle =
             this.engine.getParticlePool().create();
@@ -85,22 +94,38 @@ export class ParticleSystem {
             0
         );
 
-        particle.radius = options.radius ?? 2;
+        particle.radius =
+            options.radius ?? 2;
 
-        particle.lifetime = options.lifetime ?? Infinity;
+        particle.lifetime =
+            options.lifetime ?? Infinity;
 
         return true;
     }
+
     public getActiveParticles() {
         return this.engine
             .getParticlePool()
             .getActiveParticles();
     }
-    public addEmitter(emitter: IEmitter): void {
+
+    public addEmitter(
+        emitter: IEmitter
+    ): void {
         this.engine
             .getSimulation()
             .addEmitter(emitter);
     }
+
+    // ✅ NEW
+    public addForce(
+        force: IForce
+    ): void {
+        this.engine
+            .getSimulation()
+            .addForce(force);
+    }
+
     public setWorldBounds(
         width: number,
         height: number
@@ -109,5 +134,4 @@ export class ParticleSystem {
             .getSimulation()
             .setWorldBounds(width, height);
     }
-
 }

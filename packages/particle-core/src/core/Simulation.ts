@@ -54,6 +54,12 @@ export class Simulation {
             this.particlePool.getActiveParticles();
 
         for (const particle of particles) {
+            // Apply Forces
+            this.forceManager.update(
+                particle,
+                deltaTime
+            );
+
             // Velocity Integration
             particle.position.x +=
                 particle.velocity.x * deltaTime;

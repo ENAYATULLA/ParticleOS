@@ -1,5 +1,6 @@
 import {
   ContinuousEmitter,
+  GravityForce,
   ParticleSystem,
 } from "@particleos/particle-core";
 
@@ -26,11 +27,17 @@ system.setWorldBounds(
   renderer.height
 );
 
+// Gravity
+system.addForce(
+  new GravityForce(300)
+);
+
+// Continuous emitter
 system.addEmitter(
   new ContinuousEmitter(
     renderer.width / 2,
     renderer.height / 2,
-    30,   // 30 particles per second
+    30,
     120
   )
 );
