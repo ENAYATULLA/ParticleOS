@@ -89,4 +89,9 @@ export class ParticleSystem {
 
         return true;
     }
+    public getActiveParticles() {
+        return this.engine
+            .getParticlePool()
+            .getActiveParticles();
+    }
 }
