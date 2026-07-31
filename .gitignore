@@ -1,0 +1,25 @@
+# dependencies
+node_modules
+
+# builds
+dist
+build
+.next
+out
+
+# logs
+*.log
+
+# cache
+.turbo
+.cache
+
+# env
+.env
+.env.local
+
+# vscode
+.vscode/settings.json
+
+# misc
+.DS_Store

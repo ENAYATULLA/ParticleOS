@@ -1,0 +1,36 @@
+{
+    "name": "particleos",
+    "version": "0.1.0",
+    "private": true,
+    "packageManager": "pnpm@11.18.0",
+    "description": "The Open Source GPU Particle Engine for Interactive Experiences.",
+    "license": "MIT",
+    "author": "Enayat Ullah",
+    "homepage": "https://github.com/ENAYATULLA/ParticleOS",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/ENAYATULLA/ParticleOS.git"
+    },
+    "keywords": [
+        "particles",
+        "threejs",
+        "react-three-fiber",
+        "webgl",
+        "animation",
+        "gpu",
+        "shader",
+        "typescript",
+        "nextjs"
+    ],
+    "scripts": {
+        "build": "turbo run build",
+        "typecheck": "turbo run typecheck",
+        "dev": "turbo run dev",
+        "lint": "turbo run lint",
+        "format": "biome check . --write"
+    },
+    "devDependencies": {
+        "turbo": "^2.5.6",
+        "typescript": "^5.9.2"
+    }
+}
