@@ -27,7 +27,10 @@ export class CanvasRenderer {
     }
 
     public clear(color = "#0d1117"): void {
+        this.context.globalAlpha = 1;
+
         this.context.fillStyle = color;
+
         this.context.fillRect(
             0,
             0,
@@ -40,8 +43,13 @@ export class CanvasRenderer {
         x: number,
         y: number,
         radius: number,
-        color = "#ffffff"
+        color = "#ffffff",
+        alpha = 1
     ): void {
+        this.context.save();
+
+        this.context.globalAlpha = alpha;
+
         this.context.fillStyle = color;
 
         this.context.beginPath();
@@ -55,6 +63,8 @@ export class CanvasRenderer {
         );
 
         this.context.fill();
+
+        this.context.restore();
     }
 
     public drawText(
@@ -64,6 +74,7 @@ export class CanvasRenderer {
         color = "#00ff99"
     ): void {
         this.context.fillStyle = color;
+
         this.context.font = "16px monospace";
 
         this.context.fillText(text, x, y);

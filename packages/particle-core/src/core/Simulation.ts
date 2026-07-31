@@ -94,6 +94,9 @@ export class Simulation {
             // Lifetime
             particle.age += deltaTime;
 
+            // Appearance over lifetime
+
+
             if (!particle.isAlive()) {
                 this.particlePool.release(particle);
             }

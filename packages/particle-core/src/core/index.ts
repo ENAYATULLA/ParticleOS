@@ -5,3 +5,4 @@ export * from "./Time";
 
 export * from "./emitters";
 export * from "./forces";
+export * from "./behaviors";

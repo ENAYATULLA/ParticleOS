@@ -1,4 +1,5 @@
 import {
+  AlphaOverLifetimeBehavior,
   ContinuousEmitter,
   GravityForce,
   ParticleSystem,
@@ -32,6 +33,11 @@ system.addForce(
   new GravityForce(300)
 );
 
+// Alpha Fade Behavior
+system.addBehavior(
+  new AlphaOverLifetimeBehavior()
+);
+
 // Continuous emitter
 system.addEmitter(
   new ContinuousEmitter(
@@ -55,7 +61,9 @@ function render(): void {
     renderer.drawCircle(
       particle.position.x,
       particle.position.y,
-      particle.radius
+      particle.radius,
+      particle.color,
+      particle.alpha
     );
   }
 

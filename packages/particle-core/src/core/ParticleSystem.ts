@@ -7,6 +7,7 @@ import { Time } from "./Time";
 
 import type { SpawnOptions } from "../types";
 import type {
+    IBehavior,
     IEmitter,
     IForce,
 } from "../interfaces";
@@ -124,6 +125,13 @@ export class ParticleSystem {
         this.engine
             .getSimulation()
             .addForce(force);
+    }
+    public addBehavior(
+        behavior: IBehavior
+    ): void {
+        this.engine
+            .getSimulation()
+            .addBehavior(behavior);
     }
 
     public setWorldBounds(
