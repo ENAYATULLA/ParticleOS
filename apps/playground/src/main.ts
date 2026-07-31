@@ -1,14 +1,8 @@
+import { Particle } from "@particleos/particle-core";
 import "./style.css";
 
+import { GameLoop } from "./engine/GameLoop";
 import { CanvasRenderer } from "./renderer/CanvasRenderer";
-
-interface Particle {
-  x: number;
-  y: number;
-  vx: number;
-  vy: number;
-  radius: number;
-}
 
 const app = document.querySelector<HTMLDivElement>("#app");
 
@@ -21,26 +15,37 @@ const renderer = new CanvasRenderer(app);
 const particles: Particle[] = [];
 
 for (let i = 0; i < 100; i++) {
-  particles.push({
-    x: Math.random() * renderer.width,
-    y: Math.random() * renderer.height,
-    vx: (Math.random() - 0.5) * 2,
-    vy: (Math.random() - 0.5) * 2,
-    radius: 2 + Math.random() * 3,
-  });
+  const particle = new Particle();
+
+  particle.position.x = Math.random() * renderer.width;
+  particle.position.y = Math.random() * renderer.height;
+
+  particle.velocity.x = (Math.random() - 0.5) * 120;
+  particle.velocity.y = (Math.random() - 0.5) * 120;
+
+  particle.radius = 2 + Math.random() * 3;
+  particle.active = true;
+
+  particles.push(particle);
 }
 
-function update(): void {
+function update(deltaTime: number): void {
   for (const particle of particles) {
-    particle.x += particle.vx;
-    particle.y += particle.vy;
+    particle.position.x += particle.velocity.x * deltaTime;
+    particle.position.y += particle.velocity.y * deltaTime;
 
-    if (particle.x < 0 || particle.x > renderer.width) {
-      particle.vx *= -1;
+    if (
+      particle.position.x < 0 ||
+      particle.position.x > renderer.width
+    ) {
+      particle.velocity.x *= -1;
     }
 
-    if (particle.y < 0 || particle.y > renderer.height) {
-      particle.vy *= -1;
+    if (
+      particle.position.y < 0 ||
+      particle.position.y > renderer.height
+    ) {
+      particle.velocity.y *= -1;
     }
   }
 }
@@ -50,8 +55,8 @@ function render(): void {
 
   for (const particle of particles) {
     renderer.drawCircle(
-      particle.x,
-      particle.y,
+      particle.position.x,
+      particle.position.y,
       particle.radius
     );
   }
@@ -63,11 +68,6 @@ function render(): void {
   );
 }
 
-function loop(): void {
-  update();
-  render();
+const gameLoop = new GameLoop(update, render);
 
-  requestAnimationFrame(loop);
-}
-
-loop();
+gameLoop.start();

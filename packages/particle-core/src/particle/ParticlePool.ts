@@ -31,6 +31,7 @@ export class ParticlePool {
             return null;
         }
 
+        particle.reset();
         particle.active = true;
         this.activeCount++;
 
@@ -44,7 +45,7 @@ export class ParticlePool {
             return;
         }
 
-        particle.active = false;
+        particle.reset();
         this.available.push(index);
         this.activeCount--;
     }
@@ -73,7 +74,7 @@ export class ParticlePool {
             const particle = this.particles[i];
 
             if (particle) {
-                particle.active = false;
+                particle.reset();
             }
 
             this.available.push(i);
