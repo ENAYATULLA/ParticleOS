@@ -1,6 +1,6 @@
 import {
+  ContinuousEmitter,
   ParticleSystem,
-  SimpleEmitter,
 } from "@particleos/particle-core";
 
 import "./style.css";
@@ -27,10 +27,10 @@ system.setWorldBounds(
 );
 
 system.addEmitter(
-  new SimpleEmitter(
+  new ContinuousEmitter(
     renderer.width / 2,
     renderer.height / 2,
-    100,
+    30,   // 30 particles per second
     120
   )
 );
