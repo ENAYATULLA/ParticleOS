@@ -13,6 +13,8 @@ import {
 } from "./managers";
 
 export class Simulation {
+    private readonly particlePool: ParticlePool;
+
     private readonly emitterManager: EmitterManager;
 
     private readonly behaviorManager = new BehaviorManager();
@@ -22,7 +24,11 @@ export class Simulation {
     public constructor(
         particlePool: ParticlePool
     ) {
-        this.emitterManager = new EmitterManager(particlePool);
+        this.particlePool = particlePool;
+
+        this.emitterManager = new EmitterManager(
+            particlePool
+        );
     }
 
     public addEmitter(emitter: IEmitter): void {
@@ -40,8 +46,13 @@ export class Simulation {
     public update(deltaTime: number): void {
         this.emitterManager.update(deltaTime);
 
-        // Full particle simulation pipeline
-        // will be implemented in the next phase.
+        // Particle update pipeline
+        // Force -> Behavior -> Integrator
+        // will be implemented incrementally.
+    }
+
+    public getParticlePool(): ParticlePool {
+        return this.particlePool;
     }
 
     public getEmitterManager(): EmitterManager {
